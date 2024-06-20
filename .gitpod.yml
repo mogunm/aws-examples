@@ -2,5 +2,7 @@
 tasks:
   - name: aws-cli
     before: 
+      cd /workspace
       curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
       sudo installer -pkg AWSCLIV2.pkg -target /
+      cd $THEIA_WORKSPACE_ROOT
