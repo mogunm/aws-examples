@@ -1,0 +1,18 @@
+#!/usr/bin/env bash 
+
+echo "-- delete-bucket"
+
+# Check if an argument is provided
+if [ -z "$1" ]; then
+  echo "No bucket name provided. eg: './bucket <bucket-name>'"
+  exit 1
+fi
+
+# You can use the input variable further in your script
+# For example, you can assign it to a variable
+BUCKET_NAME=$1
+echo "deleting bucket: $BUCKET_NAME"
+
+
+aws s3api delete-bucket \
+--bucket $BUCKET_NAME 
