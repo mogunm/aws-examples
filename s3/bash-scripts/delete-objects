@@ -13,6 +13,14 @@ fi
 
 BUCKET_NAME=$1
 
-$(aws s3api list-objects-v2 --bucket $BUCKET_NAME) 
+# Step 1: List objects
+aws s3api list-objects --bucket $BUCKET_NAME --query 'Contents[].{Key: Key}' --output json > objects.json
 
-aws s3api delete-objects --bucket $BUCKET_NAME --delete 
+# Step 2: Transform the output
+jq '{Objects: .}' objects.json > delete.json
+
+# Step 3: Delete objects
+aws s3api delete-objects --bucket $BUCKET_NAME --delete file://delete.json
+
+# Clean up
+rm objects.json delete.json
